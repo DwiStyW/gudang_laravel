@@ -65,7 +65,7 @@
                     </ul>
                 </li>
 
-                <li class="menu-title">@lang('Setting')</li>
+                {{-- <li class="menu-title">@lang('Setting')</li>
                 <li>
                     <a href="{{ url('admin/websetup') }}">
                         <i class="uil-analytics"></i>
@@ -79,12 +79,12 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href="#">@lang('Sync Products')</a></li>
-                        <li><a href="#">@lang('Sync Orders')</a></li>
+                        <li><a href="#">@lang('Sync Orders')</a></li> --}}
 
-                        {{-- <li><a href="sync">@lang('Sync Vend')</a></li>
+                {{-- <li><a href="sync">@lang('Sync Vend')</a></li>
                         <li><a href="sync">@lang('Sync Email Vend')</a></li> --}}
-                    </ul>
-                </li>
+                {{-- </ul>
+                </li> --}}
 
             </ul>
         </div>
