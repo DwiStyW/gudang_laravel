@@ -26,7 +26,8 @@
                 <div class="card">
                     <div class="card-body">
                         <label class="form-label">Tanggal Form</label>
-                        <input type="Date" class="form-control" name="tanggal" placeholder="Tanggal">
+                        <input type="Date" class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal"
+                            oninput="input()">
                     </div>
                 </div>
             </div>
@@ -34,7 +35,8 @@
                 <div class="card">
                     <div class="card-body">
                         <label for="exampleFormControlTextarea1">No Form</label>
-                        <input type="text" class="form-control" name="noform" placeholder="No Form">
+                        <input type="text" class="form-control" id="noform" name="noform" placeholder="No Form"
+                            oninput="input()">
                     </div>
                 </div>
             </div>
@@ -144,7 +146,7 @@
             </div>
         </div>
         <a href="javascript:history.back()" class="btn btn-md btn-secondary">back</a>
-        <button type="submit" class="btn btn-md btn-primary">Save</button>
+        <button type="submit" class="btn btn-md btn-primary" onclick="submit()">Save</button>
     </form>
 @endsection
 @section('script')
@@ -158,7 +160,6 @@
         var a = 1;
         var barang = @json($barang);
 
-        console.log(barang);
 
         function pilihkode() {
             var length = document.getElementById('indexloop').value;
@@ -289,12 +290,37 @@
             var index = parseInt(document.getElementById('indexloop').value);
             // var nextindex = index - 1;
             document.getElementById('indexloop').value = index - 1;
-            if (index < 1) {
+            if (index == 1) {
                 document.getElementById('minus').disabled = true;
             }
             document.getElementById('loop' + index).innerHTML = '<div id="loop' + index + '"></div>';
             console.log(index - 1);
             console.log(index);
         }
+
+        function input() {
+            var tgl = document.getElementById('tanggal').value;
+            var noform = document.getElementById('noform').value;
+            var tanggal = localStorage.setItem("tgl", tgl);
+            var nomorform = localStorage.setItem("noform", noform);
+
+            // console.log(tgl);
+        }
+
+        function submit() {
+            localStorage.removeItem("tgl");
+        }
+        $(document).ready(function() {
+            // console.log(localStorage.getItem("tgl"));
+            var tanggal = localStorage.getItem("tgl");
+            var nomorform = localStorage.getItem("noform");
+            document.getElementById('tanggal').value = tanggal;
+            document.getElementById('noform').value = nomorform;
+
+            var length = document.getElementById('indexloop').value;
+            for (i = 0; i < length; i++) {
+
+            }
+        });
     </script>
 @endsection
