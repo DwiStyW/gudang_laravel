@@ -64,7 +64,24 @@
                         <li><a href={{ url('barang-keluar') }}>@lang('Keluar')</a></li>
                     </ul>
                 </li>
-
+                <li>
+                    <a href="{{ url('apriori') }}">
+                        <i class="uil-calculator-alt"></i>
+                        <span>@lang('Apriori')</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-vertical-distribution-top"></i>
+                        <span>@lang('Laporan')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href={{ url('riwayatkeluarmasuk') }}>@lang('Riwayat keluar masuk')</a></li>
+                        <li><a href={{ url('laporanpergolongan') }}>@lang('Laporan perGolongan')</a></li>
+                        <li><a href={{ url('laporanall') }}>@lang('Laporan All')</a></li>
+                        <li><a href={{ url('laporansaldoakhir') }}>@lang('Laporan Saldo Akhir')</a></li>
+                    </ul>
+                </li>
                 {{-- <li class="menu-title">@lang('Setting')</li>
                 <li>
                     <a href="{{ url('admin/websetup') }}">
@@ -79,13 +96,9 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href="#">@lang('Sync Products')</a></li>
-                        <li><a href="#">@lang('Sync Orders')</a></li> --}}
-
-                {{-- <li><a href="sync">@lang('Sync Vend')</a></li>
-                        <li><a href="sync">@lang('Sync Email Vend')</a></li> --}}
-                {{-- </ul>
+                        <li><a href="#">@lang('Sync Orders')</a></li> --}} {{-- <li><a href="sync">@lang('Sync Vend')</a></li>
+                        <li><a href="sync">@lang('Sync Email Vend')</a></li> --}} {{-- </ul>
                 </li> --}}
-
             </ul>
         </div>
         <!-- Sidebar -->

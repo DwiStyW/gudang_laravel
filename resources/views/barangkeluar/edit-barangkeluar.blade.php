@@ -14,12 +14,12 @@
             Master
         @endslot
         @slot('title')
-            Edit Barang Masuk
+            Edit Barang Keluar
         @endslot
     @endcomponent
     {{-- <form> --}}
-    @foreach ($riwayatmasuk as $find)
-        <form action="/barang-masuk/update/{{ $find->id }}" method="POST">
+    @foreach ($riwayatkeluar as $find)
+        <form action="/barang-keluar/update/{{ $find->id }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-lg-6 col-sm-12">
@@ -79,8 +79,8 @@
                     </div>
                 </div>
                 @php
-                    $sats1 = floor($find->masuk / ($find->max1 * $find->max2));
-                    $sisa = $find->masuk - $sats1 * $find->max1 * $find->max2;
+                    $sats1 = floor($find->keluar / ($find->max1 * $find->max2));
+                    $sisa = $find->keluar - $sats1 * $find->max1 * $find->max2;
                     $sats2 = floor($sisa / $find->max2);
                     $sats3 = $sisa - $sats2 * $find->max2;
                 @endphp

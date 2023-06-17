@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AprioriController;
 use App\Http\Controllers\BarangkeluarController;
 use App\Http\Controllers\BarangmasukController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\masterbarangController;
 use App\Http\Controllers\MasterGolonganController;
 use App\Http\Controllers\MasterJenisController;
@@ -81,3 +83,15 @@ Route::get('barang-keluar/show/{id}', [BarangkeluarController::class, 'show']);
 Route::get('barang-keluar/edit/{id}', [BarangkeluarController::class, 'edit']);
 Route::post('barang-keluar/update/{id}', [BarangkeluarController::class, 'update']);
 Route::get('barang-keluar/delete/{id}', [BarangkeluarController::class, 'destroy']);
+
+// apriori
+Route::get('apriori', [AprioriController::class, 'index']);
+
+// laporan
+Route::get('riwayatkeluarmasuk',[LaporanController::class,'riwayatkeluarmasuk']);
+Route::get('laporanpergolongan',[LaporanController::class,'laporanpergolongan']);
+Route::get('laporanall',[LaporanController::class,'laporanall']);
+Route::get('laporansaldoakhir',[LaporanController::class,'laporansaldoakhir']);
+
+// carilaporan
+Route::post('caririwayatkeluarmasuk',[LaporanController::class,'caririwayatkeluarmasuk']);

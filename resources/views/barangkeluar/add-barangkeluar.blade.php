@@ -14,12 +14,12 @@
             Master
         @endslot
         @slot('title')
-            Add Barang Masuk
+            Add Barang Keluar
         @endslot
     @endcomponent
     {{-- <form> --}}
 
-    <form action="/barang-masuk/store" method="POST">
+    <form action="/barang-keluar/store" method="POST">
         @csrf
         <div class="row">
             <div class="col-lg-6 col-sm-12">
