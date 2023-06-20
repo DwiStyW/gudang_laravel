@@ -42,7 +42,7 @@
                                 <th data-priority="1">Satuan 2</th>
                                 <th data-priority="1">Satuan 3</th>
                                 <th data-priority="3">Tgl Input</th>
-                                <th data-priority="3">Oleh</th>
+                                {{-- <th data-priority="3">Oleh</th> --}}
                                 <th data-priority="3">Catatan</th>
                                 <th data-priority="1">Aksi</th>
                             </tr>
@@ -71,7 +71,7 @@
                                     <td>{{ $sats2 . ' ' . $rm->sat2 }}</td>
                                     <td>{{ $sats3 . ' ' . $rm->sat3 }}</td>
                                     <td>{{ $rm->tanggal }}</td>
-                                    <td>{{ $rm->adm }}</td>
+                                    {{-- <td>{{ $rm->adm }}</td> --}}
                                     <td>{{ $rm->cat }}</td>
                                     <td>
                                         <a href="barang-masuk/show/{{ $rm->id }}" class="px-3 text-warning">

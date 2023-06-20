@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AprioriController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangkeluarController;
 use App\Http\Controllers\BarangmasukController;
 use App\Http\Controllers\DashboardController;
@@ -36,8 +37,14 @@ Route::get('/pb', function () {
 Route::get('/', function () {
     return view('dashboard.dashboard');
 });
+// auth
+Route::get('/', [AuthController::class, 'index']);
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/auth', [AuthController::class, 'auth']);
+Route::get('/logout', [AuthController::class, 'logout']);
+
 //dashboard
-Route::get('dashboard', [DashboardController::class, 'index']);
+Route::get('dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 //master-barang
 Route::get('master-barang', [masterbarangController::class, 'index']);
@@ -95,3 +102,4 @@ Route::get('laporansaldoakhir',[LaporanController::class,'laporansaldoakhir']);
 
 // carilaporan
 Route::post('caririwayatkeluarmasuk',[LaporanController::class,'caririwayatkeluarmasuk']);
+Route::post('caripergol',[LaporanController::class,'caripergol']);

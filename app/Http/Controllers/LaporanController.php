@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MasterBarang;
+use App\Models\mastergolongan;
 use App\Models\Riwayattrack;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,9 +11,8 @@ use Illuminate\Support\Facades\DB;
 class LaporanController extends Controller
 {
     public function riwayatkeluarmasuk(){
-        $riwayat=Riwayattrack::get();
         $barang=MasterBarang::get();
-        return view('laporan.riwayat-keluarmasuk',compact('riwayat','barang'));
+        return view('laporan.riwayat-keluarmasuk',compact('barang'));
     }
     public function caririwayatkeluarmasuk(request $request){
         $start=$request->start;
@@ -37,13 +37,96 @@ class LaporanController extends Controller
             $sat2  = floor($sisa / $r->max2);
             $sat3  = $sisa - $sat2 * $r->max2;
         }
-        // dd($saldoawal);
-        return view('laporan.tampil-riwayatkeluarmasuk',compact('riwayat','kode','start','end','master','sat1','sat2','sat3','sals'));
+        $allin=DB::select("SELECT sum(masuk) as salin from riwayat join master on riwayat.kode=master.kode where riwayat.kode='$kode' and tglform between '$start' and '$end'");
+        $allout=DB::select("SELECT sum(keluar) as salout from riwayat join master on riwayat.kode=master.kode where riwayat.kode='$kode' and tglform between '$start' and '$end'");
+
+        foreach ($allin as $m) {
+            $totalM = $m->salin;
+        }
+        foreach ($allout as $k) {
+            $totalK = $k->salout;
+        }
+        // dd($saldoin);
+        return view('laporan.tampil-riwayatkeluarmasuk',compact('riwayat','kode','start','end','master','sat1','sat2','sat3','sals','totalM','totalK'));
     }
-     public function laporanpergolongan(){
-        return view('laporan.laporan-pergolongan');
+
+    public function laporanpergolongan(){
+        $golongan=mastergolongan::get();
+        return view('laporan.laporan-pergolongan',compact('golongan'));
     }
-     public function laporanall(){
+    public function caripergol(request $request){
+        $start=$request->start;
+        $end=$request->end;
+        $idgol=$request->kode;
+
+        $golongan=DB::select("SELECT * from golongan where id='$idgol'");
+        $masterkode=DB::select("SELECT * from master where kdgol='$idgol'");
+        foreach($masterkode as $mk){
+            $kode=$mk->kode;
+            $saldoin=DB::select("SELECT sum(masuk) as salin from riwayat join master on riwayat.kode=master.kode where riwayat.kode='$kode' and tglform between '0001-01-01' and '$start'");
+            $saldoout=DB::select("SELECT sum(keluar) as salout from riwayat join master on riwayat.kode=master.kode where riwayat.kode='$kode' and tglform between '0001-01-01' and '$start'");
+            foreach ($saldoin as $in) {
+                $salin=$in->salin;
+            }
+            foreach ($saldoout as $out) {
+                $salout=$out->salout;
+            }
+            $saldo = $salin - $salout;
+            //konvert 3 satuan
+            $ts1  = floor($saldo / ($mk->max1 * $mk->max2));
+            $its  = $saldo - ($ts1 * $mk->max1 * $mk->max2);
+            $ts2  = floor($its / $mk->max2);
+            $ts3  = $its - $ts2 * $mk->max2;
+
+            $allin=DB::select("SELECT sum(masuk) as salin from riwayat join master on riwayat.kode=master.kode where riwayat.kode='$kode' and tglform between '$start' and '$end'");
+            $allout=DB::select("SELECT sum(keluar) as salout from riwayat join master on riwayat.kode=master.kode where riwayat.kode='$kode' and tglform between '$start' and '$end'");
+
+            foreach ($allin as $m) {
+                $totalM = $m->salin;
+            }
+            $tas1  = floor($totalM / ($mk->max1 * $mk->max2));
+            $itas  = $totalM - ($tas1 * $mk->max1 * $mk->max2);
+            $tas2  = floor($itas / $mk->max2);
+            $tas3  = $itas - $tas2 * $mk->max2;
+
+            foreach ($allout as $k) {
+                $totalK = $k->salout;
+            }
+            $sat1  = floor($totalK / ($mk->max1 * $mk->max2));
+            $sis  = $totalK - ($sat1 * $mk->max1 * $mk->max2);
+            $sat2  = floor($sis / $mk->max2);
+            $sat3  = $sis - $sat2 * $mk->max2;
+
+            $akhirr = $saldo + $totalM - $totalK;
+
+            $st1  = floor($akhirr / ($mk->max1 * $mk->max2));
+            $ss  = $akhirr - ($st1 * $mk->max1 * $mk->max2);
+            $st2  = floor($ss / $mk->max2);
+            $st3  = $ss - $st2 * $mk->max2;
+
+            $data[]=[
+                'kode'=>$kode,
+                'nama'=>$mk->nama,
+                'saldoawal1'=>$ts1,
+                'saldoawal2'=>$ts2,
+                'saldoawal3'=>$ts3,
+                'salmasuk1'=>$tas1,
+                'salmasuk2'=>$tas3,
+                'salmasuk3'=>$tas3,
+                'salkeluar1'=>$sat1,
+                'salkeluar2'=>$sat2,
+                'salkeluar3'=>$sat3,
+                'saldoakhir1'=>$st1,
+                'saldoakhir2'=>$st2,
+                'saldoakhir3'=>$st3,
+            ];
+
+        }
+        // dd($data);
+        return view('laporan.tampil-laporan-pergolongan',compact('start','end','golongan','data'));
+    }
+
+    public function laporanall(){
         return view('laporan.laporan-all');
     }
      public function laporansaldoakhir(){
