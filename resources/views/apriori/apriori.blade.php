@@ -21,22 +21,46 @@
     <div class="card">
         <div class="card-body">
             <label for="exampleFormControlTextarea1">minimum support 1 itemset</label>
-            <input type="number" class="form-control" id="ms1" placeholder="0">
+            <div class="row">
+                <div class="col-11">
+                    <input type="number" class="form-control" id="ms1" placeholder="0">
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-secondary" onclick="prosesms1()">proses</button>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <label for="exampleFormControlTextarea1">minimum support 2 itemset</label>
-            <input type="number" class="form-control" id="ms2" placeholder="0">
+            <div class="row">
+                <div class="col-11">
+                    <input type="number" class="form-control" id="ms2" placeholder="0">
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-secondary" onclick="prosesms2()">proses</button>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <label for="exampleFormControlTextarea1">minimum confidence</label>
-            <input type="number" class="form-control" id="mc1" placeholder="0">
+            <div class="row">
+                <div class="col-11">
+                    <input type="number" class="form-control" id="mc1" placeholder="0">
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-secondary" onclick="prosesmc()">proses</button>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-end">
-                <button onclick="apriori()" class="btn btn-primary">submit</button>
+                <button onclick="apriori()" class="btn btn-primary">proses asosiasi</button>
             </div>
         </div>
     </div>
+    <div id="tabelms1"></div>
+    <div id="tabelms2"></div>
+    <div id="tabelmc"></div>
     <div id="tabelasosiasi"></div>
 @endsection
 @section('script')
@@ -52,14 +76,9 @@
         var datatr = @json($gdform);
         var datatransaksi = @json($transaksi);
         var datamst = @json($master);
-        var datanoform = [];
+
         var arrns1 = [];
-        var arr2k = [];
-        var arrnf = [];
-        var arrms1 = [];
-        var arrns2 = [];
-        var arrms2 = [];
-        var result = [];
+
 
 
         // console.log(datatransaksi[0].kode)
@@ -75,8 +94,415 @@
             // console.log(datamst[i].kode + ' | ' + findkode.length + ' | ' + ns1 + '%')
         }
         // console.log(arrns1);
+        function prosesms1() {
+            var ms1 = document.getElementById('ms1').value;
+            var elarrns1 = arrns1.filter(b => b.support1 >= ms1);
+            var array1 = [];
+            var no = 1;
+            for (let c = 0; c < elarrns1.length; c++) {
+                array1.push({
+                    no: no++,
+                    kode: elarrns1[c].kode,
+                    fm1: elarrns1[c].fm1,
+                    support1: elarrns1[c].support1
+                })
+
+                // console.log(b)
+            }
+            var tabel = '';
+            tabel += '  <div class="card">';
+            tabel += '  <div class="card-body">';
+            tabel +=
+                '<table id="tabelprosesms1" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
+            tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
+            tabel += '      <tr>';
+            tabel += '          <th>No</th>';
+            tabel += '          <th>kode</th>';
+            tabel += '          <th>Frekuensi kemunculan</th>';
+            tabel += '          <th>support 1 (%)</th>';
+            tabel += '      </tr>';
+            tabel += '  </thead>';
+            tabel += '</table>';
+            tabel += '</div>';
+            tabel += '</div>';
+
+            $(document).ready(function() {
+                var data = array1;
+                $('#tabelprosesms1').DataTable({
+
+                    columns: [{
+                            data: 'no',
+                        },
+                        {
+                            data: 'kode',
+                        },
+                        {
+                            data: 'fm1',
+                        },
+                        {
+                            data: 'support1',
+                        }
+                    ],
+                    data: data,
+                    processing: true,
+                    deferRender: true,
+                    language: {
+                        paginate: {
+                            previous: '‹',
+                            next: '›'
+                        },
+                        aria: {
+                            paginate: {
+                                previous: 'Previous',
+                                next: 'Next'
+                            }
+                        }
+                    },
+                    pagingType: 'simple_numbers',
+                    responsive: true,
+
+                    dom: 't<"rowt justify-content-between"ip>',
+                });
+            });
+            document.getElementById('tabelms1').innerHTML = tabel;
+            document.getElementById('tabelms1').style.display = "block";
+            document.getElementById('tabelms2').style.display = "none";
+            document.getElementById('tabelmc').style.display = "none";
+            document.getElementById('tabelasosiasi').style.display = "none";
+
+        }
+
+        function prosesms2() {
+            var ms1 = document.getElementById('ms1').value;
+            var elarrns1 = arrns1.filter(b => b.support1 >= ms1);
+            var ar1 = [];
+            var ar2 = [];
+            var ar3 = [];
+            var ar4 = [];
+            for (let c = 0; c < elarrns1.length; c++) {
+                var a = elarrns1[c].kode;
+                var b = elarrns1.filter(c => c.kode != a);
+                for (let d = 0; d < b.length; d++) {
+                    ar1.push({
+                        kode1: a,
+                        kode2: b[d].kode
+                    })
+                }
+                // console.log(b)
+            }
+
+            for (let f = 0; f < datatr.length; f++) {
+                for (let g = 0; g < datatr[f].length; g++) {
+                    var kode = datatr[f].map(function(item) {
+                        return item['kode'];
+                    });
+
+                    ar2.push({
+                        noform: datatr[f][g].noform,
+                        kode: kode.join(',')
+                    })
+                    // console.log(kode.join(','))
+                }
+
+            }
+            // grupby
+            const groupBy = (keys) => (array) =>
+                array.reduce((objectsByKeyValue, obj) => {
+                    const value = keys.map((key) => obj[key]).join("-");
+                    objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+                    return objectsByKeyValue;
+                }, {});
+            // const arr = filterabsen;
+            const gnoform = groupBy(['noform']);
+
+            for (let [noform, value] of Object.entries(gnoform(ar2))) {
+                ar3.push({
+                    noform: noform,
+                    kode: value[0].kode
+                })
+            }
+
+            for (let e = 0; e < ar1.length; e++) {
+                var kode1 = ar1[e].kode1;
+                var kode2 = ar1[e].kode2;
+                let fk2k = ar3.filter(function(kode) {
+                    return kode.kode.includes(kode1) && kode.kode.includes(kode2)
+                })
+                let fkk1 = ar3.filter(function(kode) {
+                    return kode.kode.includes(kode1)
+                })
+                ns2 = fk2k.length / ar3.length * 100;
+                nc = fk2k.length / fkk1.length * 100;
+
+                ar4.push({
+                    kode1: kode1,
+                    kode2: kode2,
+                    fk2k: fk2k.length,
+                    fkk1: fkk1.length,
+                    ns2: ns2,
+                    nc: nc,
+                })
+            }
+            console.log(ar4);
+
+            var ms2 = document.getElementById('ms2').value;
+            var elarrns2 = ar4.filter(b => b.ns2 >= ms2)
+            var array2 = [];
+            var no = 1;
+            for (let f = 0; f < elarrns2.length; f++) {
+                array2.push({
+                    no: no++,
+                    kode: elarrns2[f].kode1 + ', ' + elarrns2[f].kode2,
+                    fk2k: elarrns2[f].fk2k,
+                    ns2: elarrns2[f].ns2,
+                })
+            }
+            console.log(array2)
+            var tabel = '';
+            tabel += '  <div class="card">';
+            tabel += '  <div class="card-body">';
+            tabel +=
+                '<table id="tabelprosesms2" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
+            tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
+            tabel += '      <tr>';
+            tabel += '          <th>No</th>';
+            tabel += '          <th>kode</th>';
+            tabel += '          <th>Frekuensi kemunculan</th>';
+            tabel += '          <th>support 2 (%)</th>';
+            tabel += '      </tr>';
+            tabel += '  </thead>';
+            tabel += '</table>';
+            tabel += '</div>';
+            tabel += '</div>';
+
+            $(document).ready(function() {
+                var data = array2;
+                $('#tabelprosesms2').DataTable({
+
+                    columns: [{
+                            data: 'no',
+                        },
+                        {
+                            data: 'kode',
+                        },
+                        {
+                            data: 'fk2k',
+                        },
+                        {
+                            data: 'ns2',
+                        }
+                    ],
+                    data: data,
+                    processing: true,
+                    deferRender: true,
+                    language: {
+                        paginate: {
+                            previous: '‹',
+                            next: '›'
+                        },
+                        aria: {
+                            paginate: {
+                                previous: 'Previous',
+                                next: 'Next'
+                            }
+                        }
+                    },
+                    pagingType: 'simple_numbers',
+                    responsive: true,
+
+                    dom: 't<"rowt justify-content-between"ip>',
+                });
+            });
+            document.getElementById('tabelms2').innerHTML = tabel;
+            document.getElementById('tabelms1').style.display = "none";
+            document.getElementById('tabelms2').style.display = "block";
+            document.getElementById('tabelmc').style.display = "none";
+            document.getElementById('tabelasosiasi').style.display = "none";
+        }
+
+        function prosesmc() {
+            var ms1 = document.getElementById('ms1').value;
+            var elarrns1 = arrns1.filter(b => b.support1 >= ms1);
+            var ar1 = [];
+            var ar2 = [];
+            var ar3 = [];
+            var ar4 = [];
+            for (let c = 0; c < elarrns1.length; c++) {
+                var a = elarrns1[c].kode;
+                var b = elarrns1.filter(c => c.kode != a);
+                for (let d = 0; d < b.length; d++) {
+                    ar1.push({
+                        kode1: a,
+                        kode2: b[d].kode
+                    })
+                }
+                // console.log(b)
+            }
+
+            for (let f = 0; f < datatr.length; f++) {
+                for (let g = 0; g < datatr[f].length; g++) {
+                    var kode = datatr[f].map(function(item) {
+                        return item['kode'];
+                    });
+
+                    ar2.push({
+                        noform: datatr[f][g].noform,
+                        kode: kode.join(',')
+                    })
+                    // console.log(kode.join(','))
+                }
+
+            }
+            // grupby
+            const groupBy = (keys) => (array) =>
+                array.reduce((objectsByKeyValue, obj) => {
+                    const value = keys.map((key) => obj[key]).join("-");
+                    objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+                    return objectsByKeyValue;
+                }, {});
+            // const arr = filterabsen;
+            const gnoform = groupBy(['noform']);
+
+            for (let [noform, value] of Object.entries(gnoform(ar2))) {
+                ar3.push({
+                    noform: noform,
+                    kode: value[0].kode
+                })
+            }
+
+            for (let e = 0; e < ar1.length; e++) {
+                var kode1 = ar1[e].kode1;
+                var kode2 = ar1[e].kode2;
+                let fk2k = ar3.filter(function(kode) {
+                    return kode.kode.includes(kode1) && kode.kode.includes(kode2)
+                })
+                let fkk1 = ar3.filter(function(kode) {
+                    return kode.kode.includes(kode1)
+                })
+                ns2 = fk2k.length / ar3.length * 100;
+                nc = fk2k.length / fkk1.length * 100;
+
+                ar4.push({
+                    kode1: kode1,
+                    kode2: kode2,
+                    fk2k: fk2k.length,
+                    fkk1: fkk1.length,
+                    ns2: ns2,
+                    nc: nc,
+                })
+            }
+            // console.log(ar4);
+
+            var ms2 = document.getElementById('ms2').value;
+            var elarrns2 = ar4.filter(b => b.ns2 >= ms2)
+            var array2 = [];
+            var no = 1;
+            for (let f = 0; f < elarrns2.length; f++) {
+                array2.push({
+                    kode1: elarrns2[f].kode1,
+                    kode2: elarrns2[f].kode2,
+                    fk2k: elarrns2[f].fk2k,
+                    fkk1: elarrns2[f].fkk1,
+                    ns2: elarrns2[f].ns2,
+                    nc: elarrns2[f].nc,
+                })
+            }
+            var mc1 = document.getElementById('mc1').value;
+            var elarrnc = array2.filter(b => b.nc >= mc1);
+            var no = 1;
+            var array3 = [];
+            for (let g = 0; g < elarrnc.length; g++) {
+                var ns2 = elarrnc[g].ns2;
+                var nc = elarrnc[g].nc;
+                // console.log(ns2.toFixed(2))
+                array3.push({
+                    no: no++,
+                    kode: elarrnc[g].kode1 + ', ' + elarrnc[g].kode2,
+                    fk2k: elarrnc[g].fk2k,
+                    fkk1: elarrnc[g].fkk1,
+                    ns2: ns2,
+                    nc: nc,
+                })
+            }
+            // console.log(array3);
+            var tabel = '';
+            tabel += '  <div class="card">';
+            tabel += '  <div class="card-body">';
+            tabel +=
+                '<table id="tabelprosesmc" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
+            tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
+            tabel += '      <tr>';
+            tabel += '          <th>No</th>';
+            tabel += '          <th>kode</th>';
+            tabel += '          <th>Frekuensi kemunculan 2 itemset</th>';
+            tabel += '          <th>Frekuensi kemunculan itemset ke-1</th>';
+            tabel += '          <th>support 2 itemset(%)</th>';
+            tabel += '          <th>confidence (%)</th>';
+            tabel += '      </tr>';
+            tabel += '  </thead>';
+            tabel += '</table>';
+            tabel += '</div>';
+            tabel += '</div>';
+
+            $(document).ready(function() {
+                var data = array3;
+                $('#tabelprosesmc').DataTable({
+
+                    columns: [{
+                            data: 'no',
+                        },
+                        {
+                            data: 'kode',
+                        },
+                        {
+                            data: 'fk2k',
+                        },
+                        {
+                            data: 'fkk1',
+                        },
+                        {
+                            data: 'ns2',
+                        },
+                        {
+                            data: 'nc',
+                        }
+                    ],
+                    data: data,
+                    processing: true,
+                    deferRender: true,
+                    language: {
+                        paginate: {
+                            previous: '‹',
+                            next: '›'
+                        },
+                        aria: {
+                            paginate: {
+                                previous: 'Previous',
+                                next: 'Next'
+                            }
+                        }
+                    },
+                    pagingType: 'simple_numbers',
+                    responsive: true,
+
+                    dom: 't<"rowt justify-content-between"ip>',
+                });
+            });
+            document.getElementById('tabelmc').innerHTML = tabel;
+            document.getElementById('tabelms1').style.display = "none";
+            document.getElementById('tabelms2').style.display = "none";
+            document.getElementById('tabelmc').style.display = "block";
+            document.getElementById('tabelasosiasi').style.display = "none";
+        }
 
         function apriori() {
+            var datanoform = [];
+            var arr2k = [];
+            var arrnf = [];
+            var arrms1 = [];
+            var arrns2 = [];
+            var arrms2 = [];
+            var result = [];
             var ms1 = document.getElementById('ms1').value;
             var elarrns1 = arrns1.filter(b => b.support1 >= ms1);
 
@@ -266,6 +692,10 @@
                 });
             });
             document.getElementById('tabelasosiasi').innerHTML = tabel;
+            document.getElementById('tabelms1').style.display = "none";
+            document.getElementById('tabelms2').style.display = "none";
+            document.getElementById('tabelmc').style.display = "none";
+            document.getElementById('tabelasosiasi').style.display = "block";
         }
     </script>
 @endsection
