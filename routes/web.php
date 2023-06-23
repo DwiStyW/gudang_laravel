@@ -103,3 +103,5 @@ Route::get('laporansaldoakhir',[LaporanController::class,'laporansaldoakhir']);
 // carilaporan
 Route::post('caririwayatkeluarmasuk',[LaporanController::class,'caririwayatkeluarmasuk']);
 Route::post('caripergol',[LaporanController::class,'caripergol']);
+Route::post('carisaldoakhir',[LaporanController::class,'carisaldoakhir']);
+Route::post('cariall',[LaporanController::class,'cariall']);

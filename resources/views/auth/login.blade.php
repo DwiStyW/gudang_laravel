@@ -42,12 +42,6 @@
                                             placeholder="Enter Password" />
                                     </div>
 
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="auth-remember-check"
-                                            name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="auth-remember-check">Remember me</label>
-                                    </div>
-
                                     <div class="mt-3 text-end">
                                         <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Log
                                             In</button>

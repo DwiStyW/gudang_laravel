@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    @lang('translation.Add_Product')
+    @lang('Apriori')
 @endsection
 @section('css')
     <!-- DataTables -->
@@ -76,6 +76,7 @@
         var datatr = @json($gdform);
         var datatransaksi = @json($transaksi);
         var datamst = @json($master);
+        // console.log(datamst)
 
         var arrns1 = [];
 
@@ -88,6 +89,7 @@
             ns1 = findkode.length / datatr.length * 100;
             arrns1.push({
                 kode: datamst[i].kode,
+                nama: datamst[i].nama,
                 fm1: findkode.length,
                 support1: ns1
             })
@@ -103,6 +105,7 @@
                 array1.push({
                     no: no++,
                     kode: elarrns1[c].kode,
+                    nama: elarrns1[c].nama,
                     fm1: elarrns1[c].fm1,
                     support1: elarrns1[c].support1
                 })
@@ -117,7 +120,7 @@
             tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
             tabel += '      <tr>';
             tabel += '          <th>No</th>';
-            tabel += '          <th>kode</th>';
+            tabel += '          <th>Barang</th>';
             tabel += '          <th>Frekuensi kemunculan</th>';
             tabel += '          <th>support 1 (%)</th>';
             tabel += '      </tr>';
@@ -134,7 +137,7 @@
                             data: 'no',
                         },
                         {
-                            data: 'kode',
+                            data: 'nama',
                         },
                         {
                             data: 'fm1',
@@ -181,14 +184,17 @@
             var ar4 = [];
             for (let c = 0; c < elarrns1.length; c++) {
                 var a = elarrns1[c].kode;
+                var nama1 = elarrns1[c].nama;
                 var b = elarrns1.filter(c => c.kode != a);
                 for (let d = 0; d < b.length; d++) {
                     ar1.push({
                         kode1: a,
-                        kode2: b[d].kode
+                        nama1: nama1,
+                        kode2: b[d].kode,
+                        nama2: b[d].nama
                     })
                 }
-                // console.log(b)
+                // console.log(ar1)
             }
 
             for (let f = 0; f < datatr.length; f++) {
@@ -224,7 +230,9 @@
 
             for (let e = 0; e < ar1.length; e++) {
                 var kode1 = ar1[e].kode1;
+                var nama1 = ar1[e].nama1;
                 var kode2 = ar1[e].kode2;
+                var nama2 = ar1[e].nama2;
                 let fk2k = ar3.filter(function(kode) {
                     return kode.kode.includes(kode1) && kode.kode.includes(kode2)
                 })
@@ -236,14 +244,16 @@
 
                 ar4.push({
                     kode1: kode1,
+                    nama1: nama1,
                     kode2: kode2,
+                    nama2: nama2,
                     fk2k: fk2k.length,
                     fkk1: fkk1.length,
                     ns2: ns2,
                     nc: nc,
                 })
             }
-            console.log(ar4);
+            // console.log(ar4);
 
             var ms2 = document.getElementById('ms2').value;
             var elarrns2 = ar4.filter(b => b.ns2 >= ms2)
@@ -253,6 +263,7 @@
                 array2.push({
                     no: no++,
                     kode: elarrns2[f].kode1 + ', ' + elarrns2[f].kode2,
+                    nama: elarrns2[f].nama1 + ', ' + elarrns2[f].nama2,
                     fk2k: elarrns2[f].fk2k,
                     ns2: elarrns2[f].ns2,
                 })
@@ -266,7 +277,7 @@
             tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
             tabel += '      <tr>';
             tabel += '          <th>No</th>';
-            tabel += '          <th>kode</th>';
+            tabel += '          <th>Barang</th>';
             tabel += '          <th>Frekuensi kemunculan</th>';
             tabel += '          <th>support 2 (%)</th>';
             tabel += '      </tr>';
@@ -283,7 +294,7 @@
                             data: 'no',
                         },
                         {
-                            data: 'kode',
+                            data: 'nama',
                         },
                         {
                             data: 'fk2k',
@@ -329,11 +340,14 @@
             var ar4 = [];
             for (let c = 0; c < elarrns1.length; c++) {
                 var a = elarrns1[c].kode;
+                var nama1 = elarrns1[c].nama;
                 var b = elarrns1.filter(c => c.kode != a);
                 for (let d = 0; d < b.length; d++) {
                     ar1.push({
                         kode1: a,
-                        kode2: b[d].kode
+                        nama1: nama1,
+                        kode2: b[d].kode,
+                        nama2: b[d].nama
                     })
                 }
                 // console.log(b)
@@ -372,7 +386,9 @@
 
             for (let e = 0; e < ar1.length; e++) {
                 var kode1 = ar1[e].kode1;
+                var nama1 = ar1[e].nama1;
                 var kode2 = ar1[e].kode2;
+                var nama2 = ar1[e].nama2;
                 let fk2k = ar3.filter(function(kode) {
                     return kode.kode.includes(kode1) && kode.kode.includes(kode2)
                 })
@@ -384,7 +400,9 @@
 
                 ar4.push({
                     kode1: kode1,
+                    nama1: nama1,
                     kode2: kode2,
+                    nama2: nama2,
                     fk2k: fk2k.length,
                     fkk1: fkk1.length,
                     ns2: ns2,
@@ -400,7 +418,9 @@
             for (let f = 0; f < elarrns2.length; f++) {
                 array2.push({
                     kode1: elarrns2[f].kode1,
+                    nama1: elarrns2[f].nama1,
                     kode2: elarrns2[f].kode2,
+                    nama2: elarrns2[f].nama2,
                     fk2k: elarrns2[f].fk2k,
                     fkk1: elarrns2[f].fkk1,
                     ns2: elarrns2[f].ns2,
@@ -418,6 +438,7 @@
                 array3.push({
                     no: no++,
                     kode: elarrnc[g].kode1 + ', ' + elarrnc[g].kode2,
+                    nama: elarrnc[g].nama1 + ', ' + elarrnc[g].nama2,
                     fk2k: elarrnc[g].fk2k,
                     fkk1: elarrnc[g].fkk1,
                     ns2: ns2,
@@ -433,7 +454,7 @@
             tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
             tabel += '      <tr>';
             tabel += '          <th>No</th>';
-            tabel += '          <th>kode</th>';
+            tabel += '          <th>Barang</th>';
             tabel += '          <th>Frekuensi kemunculan 2 itemset</th>';
             tabel += '          <th>Frekuensi kemunculan itemset ke-1</th>';
             tabel += '          <th>support 2 itemset(%)</th>';
@@ -452,7 +473,7 @@
                             data: 'no',
                         },
                         {
-                            data: 'kode',
+                            data: 'nama',
                         },
                         {
                             data: 'fk2k',
@@ -508,11 +529,14 @@
 
             for (let c = 0; c < elarrns1.length; c++) {
                 var a = elarrns1[c].kode;
+                var nama1 = elarrns1[c].nama;
                 var b = elarrns1.filter(c => c.kode != a);
                 for (let d = 0; d < b.length; d++) {
                     arr2k.push({
                         kode1: a,
-                        kode2: b[d].kode
+                        nama1: nama1,
+                        kode2: b[d].kode,
+                        nama2: b[d].nama
                     })
                 }
                 // console.log(b)
@@ -551,7 +575,9 @@
 
             for (let e = 0; e < arr2k.length; e++) {
                 var kode1 = arr2k[e].kode1;
+                var nama1 = arr2k[e].nama1;
                 var kode2 = arr2k[e].kode2;
+                var nama2 = arr2k[e].nama2;
                 let fk2k = datanoform.filter(function(kode) {
                     return kode.kode.includes(kode1) && kode.kode.includes(kode2)
                 })
@@ -563,7 +589,9 @@
 
                 arrms1.push({
                     kode1: kode1,
+                    nama1: nama1,
                     kode2: kode2,
+                    nama2: nama2,
                     fk2k: fk2k.length,
                     fkk1: fkk1.length,
                     ns2: ns2,
@@ -578,7 +606,9 @@
             for (let f = 0; f < elarrns2.length; f++) {
                 arrms2.push({
                     kode1: elarrns2[f].kode1,
+                    nama1: elarrns2[f].nama1,
                     kode2: elarrns2[f].kode2,
+                    nama2: elarrns2[f].nama2,
                     fk2k: elarrns2[f].fk2k,
                     fkk1: elarrns2[f].fkk1,
                     ns2: elarrns2[f].ns2,
@@ -597,12 +627,13 @@
                 result.push({
                     no: no++,
                     kode: elarrnc[g].kode1 + ', ' + elarrnc[g].kode2,
+                    nama: elarrnc[g].nama1 + ', ' + elarrnc[g].nama2,
                     fk2k: elarrnc[g].fk2k,
                     fkk1: elarrnc[g].fkk1,
                     ns2: ns2.toFixed(2),
                     nc: nc.toFixed(2),
-                    asosiasi: 'Jika terdapat transaksi barang keluar dengan kode <b>' + elarrnc[g].kode1 +
-                        '</b> maka juga terdapat transaksi barang keluar dengan kode <b>' + elarrnc[g].kode2 +
+                    asosiasi: 'Jika terdapat transaksi barang keluar <b>' + elarrnc[g].nama1 +
+                        '</b> maka juga terdapat transaksi barang keluar <b>' + elarrnc[g].nama2 +
                         '</b> yang memiliki nilai support <b>' + ns2.toFixed(2) + '%</b> dan confidence <b>' +
                         nc.toFixed(2) +
                         '%</b> dari semua transaksi yang dianalisis. Oleh sebab itu maka posisi atau tata letak kedua barang dapat diletakkan secara berdampingan.'
@@ -616,7 +647,7 @@
             tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
             tabel += '      <tr>';
             tabel += '          <th>No</th>';
-            tabel += '          <th>kode</th>';
+            tabel += '          <th>Barang</th>';
             tabel += '          <th>frekuensi 2 itemset</th>';
             tabel += '          <th>kemunculan frekuensi</th>';
             tabel += '          <th>support (%)</th>';
@@ -636,7 +667,7 @@
                             data: 'no',
                         },
                         {
-                            data: 'kode',
+                            data: 'nama',
                         },
                         {
                             data: 'fk2k',

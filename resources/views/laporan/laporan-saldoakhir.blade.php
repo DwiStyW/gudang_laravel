@@ -17,7 +17,7 @@
             Laporan Saldo Akhir
         @endslot
     @endcomponent
-    <form action="/cariall" method="POST">
+    <form action="/carisaldoakhir" method="POST">
         @csrf
         <div class="row">
             <div class="col-12">
