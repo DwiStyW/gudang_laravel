@@ -115,6 +115,8 @@
             var tabel = '';
             tabel += '  <div class="card">';
             tabel += '  <div class="card-body">';
+            tabel += '  <h6>Total transaksi = ' + datatr.length + ' Transaksi</h6>';
+            tabel += '  <h6>Minimun support 1 itemset = ' + ms1 + '%</h6>';
             tabel +=
                 '<table id="tabelprosesms1" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
             tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
@@ -272,6 +274,9 @@
             var tabel = '';
             tabel += '  <div class="card">';
             tabel += '  <div class="card-body">';
+            tabel += '  <h6>Total transaksi = ' + datatr.length + ' Transaksi</h6>';
+            tabel += '  <h6>Minimun support 1 itemset = ' + ms1 + '%</h6>';
+            tabel += '  <h6>Minimun support 2 itemset = ' + ms2 + '%</h6>';
             tabel +=
                 '<table id="tabelprosesms2" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
             tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
@@ -449,6 +454,10 @@
             var tabel = '';
             tabel += '  <div class="card">';
             tabel += '  <div class="card-body">';
+            tabel += '  <h6>Total transaksi = ' + datatr.length + ' Transaksi</h6>';
+            tabel += '  <h6>Minimun support 1 itemset = ' + ms1 + '%</h6>';
+            tabel += '  <h6>Minimun support 2 itemset = ' + ms2 + '%</h6>';
+            tabel += '  <h6>Minimun confidence = ' + mc1 + '%</h6>';
             tabel +=
                 '<table id="tabelprosesmc" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
             tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
@@ -642,6 +651,10 @@
             var tabel = '';
             tabel += '  <div class="card">';
             tabel += '  <div class="card-body">';
+            tabel += '  <h6>Total transaksi = ' + datatr.length + ' Transaksi</h6>';
+            tabel += '  <h6>Minimun support 1 itemset = ' + ms1 + '%</h6>';
+            tabel += '  <h6>Minimun support 2 itemset = ' + ms2 + '%</h6>';
+            tabel += '  <h6>Minimun confidence = ' + mc1 + '%</h6>';
             tabel +=
                 '<table id="tabel" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
             tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';

@@ -10,3 +10,10 @@
 
 <link rel="stylesheet" href="{{ asset('assets/libs/codemirror/lib/codemirror.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/libs/codemirror/theme/dracula.css') }}">
+
+<script src="../assets/js/code/highcharts.js"></script>
+<script src="../assets/js/code/modules/drilldown.js"></script>
+<script src="../assets/js/code/modules/stock.js"></script>
+<script src="../assets/js/code/modules/exporting.js"></script>
+<script src="../assets/js/code/modules/export-data.js"></script>
+<script src="../assets/js/code/modules/accessibility.js"></script>
