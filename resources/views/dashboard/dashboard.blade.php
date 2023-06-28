@@ -13,51 +13,53 @@
     @endcomponent
 
     <div class="row">
-        <div class="col-lg-4">
-            <div class="card border-primary border-top">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h4>Master Jenis</h4>
-                            <h5>{{ count($masterjenis) }}</h5>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <i class="uil uil-archive font-size-24"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="card border-primary border-top">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h4>Master Golongan</h4>
-                            <h5>{{ count($mastergolongan) }}</h5>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <i class="uil uil-archive font-size-24"></i>
+        @if (Auth::user()->role == 'admin')
+            <div class="col-lg-4">
+                <div class="card border-primary border-top">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h4>Master Jenis</h4>
+                                <h5>{{ count($masterjenis) }}</h5>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="uil uil-archive font-size-24"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="card border-primary border-top">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h4>Master Barang</h4>
-                            <h5>{{ count($masterbarang) }}</h5>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <i class="uil uil-archive font-size-24"></i>
+            <div class="col-lg-4">
+                <div class="card border-primary border-top">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h4>Master Golongan</h4>
+                                <h5>{{ count($mastergolongan) }}</h5>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="uil uil-archive font-size-24"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="col-lg-4">
+                <div class="card border-primary border-top">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h4>Master Barang</h4>
+                                <h5>{{ count($masterbarang) }}</h5>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="uil uil-archive font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="col-12">
             <div class="card">
                 <div class="card-body">

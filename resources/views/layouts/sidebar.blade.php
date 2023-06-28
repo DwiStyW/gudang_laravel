@@ -41,19 +41,19 @@
                         <span>@lang('translation.Dashboard')</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-database-alt"></i>
-                        <span>@lang('translation.Master')</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href={{ url('master-jenis') }}>@lang('translation.Jenis')</a></li>
-                        <li><a href={{ url('master-golongan') }}>@lang('translation.Golongan')</a></li>
-                        <li><a href={{ url('master-barang') }}>@lang('translation.Barang')</a></li>
-                    </ul>
-                </li>
-
+                @if (Auth::user()->role == 'admin')
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="uil-database-alt"></i>
+                            <span>@lang('translation.Master')</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="true">
+                            <li><a href={{ url('master-jenis') }}>@lang('translation.Jenis')</a></li>
+                            <li><a href={{ url('master-golongan') }}>@lang('translation.Golongan')</a></li>
+                            <li><a href={{ url('master-barang') }}>@lang('translation.Barang')</a></li>
+                        </ul>
+                    </li>
+                @endif
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-vertical-distribution-top"></i>
@@ -64,12 +64,14 @@
                         <li><a href={{ url('barang-keluar') }}>@lang('Keluar')</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="{{ url('apriori') }}">
-                        <i class="uil-calculator-alt"></i>
-                        <span>@lang('Apriori')</span>
-                    </a>
-                </li>
+                @if (Auth::user()->role == 'admin')
+                    <li>
+                        <a href="{{ url('apriori') }}">
+                            <i class="uil-calculator-alt"></i>
+                            <span>@lang('Apriori')</span>
+                        </a>
+                    </li>
+                @endif
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-vertical-distribution-top"></i>
