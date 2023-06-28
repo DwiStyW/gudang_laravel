@@ -54,10 +54,13 @@
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-end">
-                <button onclick="apriori()" class="btn btn-primary">proses asosiasi</button>
+                <button onclick="apriori()" class="btn btn-primary"><i class="uil uil-process"></i> proses asosiasi</button>
+                <button onclick="reset()" class="btn btn-danger ms-1"><i class="uil uil-refresh"></i> reset</button>
             </div>
         </div>
     </div>
+    <div id="dataset"></div>
+    <div id="tabelpola2item"></div>
     <div id="tabelms1"></div>
     <div id="tabelms2"></div>
     <div id="tabelmc"></div>
@@ -73,14 +76,12 @@
     <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
 
     <script>
-        var datatr = @json($gdform);
-        var datatransaksi = @json($transaksi);
+        var datatr = @json($gdform); //data noform
+        var datatransaksi = @json($transaksi); //data
         var datamst = @json($master);
         // console.log(datamst)
 
         var arrns1 = [];
-
-
 
         // console.log(datatransaksi[0].kode)
 
@@ -88,13 +89,80 @@
             findkode = datatransaksi.filter(a => a.kode == datamst[i].kode);
             ns1 = findkode.length / datatr.length * 100;
             arrns1.push({
+                no: i + 1,
                 kode: datamst[i].kode,
                 nama: datamst[i].nama,
                 fm1: findkode.length,
                 support1: ns1
             })
-            // console.log(datamst[i].kode + ' | ' + findkode.length + ' | ' + ns1 + '%')
         }
+
+
+        var tabel = '';
+        tabel += '  <div class="card">';
+        tabel += '  <div class="card-body">';
+        tabel += '  <h6>Total transaksi = ' + datatr.length + ' Transaksi</h6>';
+        tabel +=
+            '<table id="tabeldataset" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
+        tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
+        tabel += '      <tr>';
+        tabel += '          <th>No</th>';
+        tabel += '          <th>Barang</th>';
+        tabel += '          <th>Frekuensi kemunculan</th>';
+        tabel += '          <th>support 1 (%)</th>';
+        tabel += '      </tr>';
+        tabel += '  </thead>';
+        tabel += '</table>';
+        tabel += '</div>';
+        tabel += '</div>';
+        $(document).ready(function() {
+            var data = arrns1;
+            // console.log(data)
+            $('#tabeldataset').DataTable({
+
+                columns: [{
+                        data: 'no',
+                    },
+                    {
+                        data: 'nama',
+                    },
+                    {
+                        data: 'fm1',
+                    },
+                    {
+                        data: 'support1',
+                    }
+                ],
+                data: data,
+                processing: true,
+                deferRender: true,
+                language: {
+                    paginate: {
+                        previous: '‹',
+                        next: '›'
+                    },
+                    aria: {
+                        paginate: {
+                            previous: 'Previous',
+                            next: 'Next'
+                        }
+                    }
+                },
+                pagingType: 'simple_numbers',
+                responsive: true,
+
+                dom: 't<"rowt justify-content-between"ip>',
+            });
+
+        });
+        document.getElementById('dataset').innerHTML = tabel;
+        document.getElementById('tabelpola2item').style.display = "none";
+        document.getElementById('dataset').style.display = "block";
+        document.getElementById('tabelms1').style.display = "none";
+        document.getElementById('tabelms2').style.display = "none";
+        document.getElementById('tabelmc').style.display = "none";
+        document.getElementById('tabelasosiasi').style.display = "none";
+
         // console.log(arrns1);
         function prosesms1() {
             var ms1 = document.getElementById('ms1').value;
@@ -115,8 +183,12 @@
             var tabel = '';
             tabel += '  <div class="card">';
             tabel += '  <div class="card-body">';
-            tabel += '  <h6>Total transaksi = ' + datatr.length + ' Transaksi</h6>';
-            tabel += '  <h6>Minimun support 1 itemset = ' + ms1 + '%</h6>';
+            tabel +=
+                '<div class="d-flex justify-content-between">' +
+                ' <div> <h6>Total transaksi = ' + datatr.length + ' Transaksi</h6>' + '  <h6>Minimun support 1 itemset = ' +
+                ms1 + '%</h6></div>' +
+                '<div><button class="btn btn-secondary" onclick="pola2item()">pola 2 itemset</button></div>' +
+                '</div>';
             tabel +=
                 '<table id="tabelprosesms1" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
             tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
@@ -128,6 +200,7 @@
             tabel += '      </tr>';
             tabel += '  </thead>';
             tabel += '</table>';
+
             tabel += '</div>';
             tabel += '</div>';
 
@@ -171,10 +244,158 @@
             });
             document.getElementById('tabelms1').innerHTML = tabel;
             document.getElementById('tabelms1').style.display = "block";
+            document.getElementById('tabelpola2item').style.display = "none";
+            document.getElementById('dataset').style.display = "none";
             document.getElementById('tabelms2').style.display = "none";
             document.getElementById('tabelmc').style.display = "none";
             document.getElementById('tabelasosiasi').style.display = "none";
 
+        }
+
+        function pola2item() {
+            var ms1 = document.getElementById('ms1').value;
+            var elarrns1 = arrns1.filter(b => b.support1 >= ms1);
+            var ar1 = [];
+            var ar2 = [];
+            var ar3 = [];
+            var ar4 = [];
+            for (let c = 0; c < elarrns1.length; c++) {
+                var a = elarrns1[c].kode;
+                var nama1 = elarrns1[c].nama;
+                var b = elarrns1.filter(c => c.kode != a);
+                for (let d = 0; d < b.length; d++) {
+                    ar1.push({
+                        kode1: a,
+                        nama1: nama1,
+                        kode2: b[d].kode,
+                        nama2: b[d].nama
+                    })
+                }
+                // console.log(ar1)
+            }
+
+            for (let f = 0; f < datatr.length; f++) {
+                for (let g = 0; g < datatr[f].length; g++) {
+                    var kode = datatr[f].map(function(item) {
+                        return item['kode'];
+                    });
+
+                    ar2.push({
+                        noform: datatr[f][g].noform,
+                        kode: kode.join(',')
+                    })
+                    // console.log(kode.join(','))
+                }
+
+            }
+            // grupby
+            const groupBy = (keys) => (array) =>
+                array.reduce((objectsByKeyValue, obj) => {
+                    const value = keys.map((key) => obj[key]).join("-");
+                    objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+                    return objectsByKeyValue;
+                }, {});
+            // const arr = filterabsen;
+            const gnoform = groupBy(['noform']);
+
+            for (let [noform, value] of Object.entries(gnoform(ar2))) {
+                ar3.push({
+                    noform: noform,
+                    kode: value[0].kode
+                })
+            }
+            no = 1;
+            for (let e = 0; e < ar1.length; e++) {
+                var kode1 = ar1[e].kode1;
+                var nama1 = ar1[e].nama1;
+                var kode2 = ar1[e].kode2;
+                var nama2 = ar1[e].nama2;
+                let fk2k = ar3.filter(function(kode) {
+                    return kode.kode.includes(kode1) && kode.kode.includes(kode2)
+                })
+                let fkk1 = ar3.filter(function(kode) {
+                    return kode.kode.includes(kode1)
+                })
+                ns2 = fk2k.length / ar3.length * 100;
+                nc = fk2k.length / fkk1.length * 100;
+
+                ar4.push({
+                    no: no++,
+                    nama: nama1 + ', ' + nama2,
+                    fk2k: fk2k.length,
+                    fkk1: fkk1.length,
+                    ns2: ns2,
+                    nc: nc,
+                })
+            }
+            var tabel = '';
+            tabel += '  <div class="card">';
+            tabel += '  <div class="card-body">';
+            tabel += '  <h6>Total transaksi = ' + datatr.length + ' Transaksi</h6>';
+            tabel += '  <h6>Minimun support 1 itemset = ' + ms1 + '%</h6>';
+            tabel +=
+                '<table id="pola2item" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
+            tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
+            tabel += '      <tr>';
+            tabel += '          <th>No</th>';
+            tabel += '          <th>Barang</th>';
+            tabel += '          <th>Frekuensi kemunculan</th>';
+            tabel += '          <th>support 2 (%)</th>';
+            tabel += '          <th>confidence (%)</th>';
+            tabel += '      </tr>';
+            tabel += '  </thead>';
+            tabel += '</table>';
+            tabel += '</div>';
+            tabel += '</div>';
+
+            $(document).ready(function() {
+                var data = ar4;
+                $('#pola2item').DataTable({
+
+                    columns: [{
+                            data: 'no',
+                        },
+                        {
+                            data: 'nama',
+                        },
+                        {
+                            data: 'fk2k',
+                        },
+                        {
+                            data: 'ns2',
+                        },
+                        {
+                            data: 'nc',
+                        }
+                    ],
+                    data: data,
+                    processing: true,
+                    deferRender: true,
+                    language: {
+                        paginate: {
+                            previous: '‹',
+                            next: '›'
+                        },
+                        aria: {
+                            paginate: {
+                                previous: 'Previous',
+                                next: 'Next'
+                            }
+                        }
+                    },
+                    pagingType: 'simple_numbers',
+                    responsive: true,
+
+                    dom: 't<"rowt justify-content-between"ip>',
+                });
+            });
+            document.getElementById('tabelpola2item').innerHTML = tabel;
+            document.getElementById('tabelpola2item').style.display = "block";
+            document.getElementById('dataset').style.display = "none";
+            document.getElementById('tabelms1').style.display = "none";
+            document.getElementById('tabelms2').style.display = "none";
+            document.getElementById('tabelmc').style.display = "none";
+            document.getElementById('tabelasosiasi').style.display = "none";
         }
 
         function prosesms2() {
@@ -270,7 +491,7 @@
                     ns2: elarrns2[f].ns2,
                 })
             }
-            console.log(array2)
+            // console.log(array2)
             var tabel = '';
             tabel += '  <div class="card">';
             tabel += '  <div class="card-body">';
@@ -330,6 +551,8 @@
                 });
             });
             document.getElementById('tabelms2').innerHTML = tabel;
+            document.getElementById('dataset').style.display = "none";
+            document.getElementById('tabelpola2item').style.display = "none";
             document.getElementById('tabelms1').style.display = "none";
             document.getElementById('tabelms2').style.display = "block";
             document.getElementById('tabelmc').style.display = "none";
@@ -519,6 +742,8 @@
                 });
             });
             document.getElementById('tabelmc').innerHTML = tabel;
+            document.getElementById('dataset').style.display = "none";
+            document.getElementById('tabelpola2item').style.display = "none";
             document.getElementById('tabelms1').style.display = "none";
             document.getElementById('tabelms2').style.display = "none";
             document.getElementById('tabelmc').style.display = "block";
@@ -736,10 +961,83 @@
                 });
             });
             document.getElementById('tabelasosiasi').innerHTML = tabel;
+            document.getElementById('dataset').style.display = "none";
+            document.getElementById('tabelpola2item').style.display = "none";
             document.getElementById('tabelms1').style.display = "none";
             document.getElementById('tabelms2').style.display = "none";
             document.getElementById('tabelmc').style.display = "none";
             document.getElementById('tabelasosiasi').style.display = "block";
+        }
+
+        function reset() {
+            var tabel = '';
+            tabel += '  <div class="card">';
+            tabel += '  <div class="card-body">';
+            tabel += '  <h6>Total transaksi = ' + datatr.length + ' Transaksi</h6>';
+            tabel +=
+                '<table id="tabeldataset" class="table table-striped table-bordered display responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">';
+            tabel += '  <thead style="background: rgba(91, 115, 232, 0.2);color:rgba(91, 115, 232)">';
+            tabel += '      <tr>';
+            tabel += '          <th>No</th>';
+            tabel += '          <th>Barang</th>';
+            tabel += '          <th>Frekuensi kemunculan</th>';
+            tabel += '          <th>support 1 (%)</th>';
+            tabel += '      </tr>';
+            tabel += '  </thead>';
+            tabel += '</table>';
+            tabel += '</div>';
+            tabel += '</div>';
+            $(document).ready(function() {
+                var data = arrns1;
+                // console.log(data)
+                $('#tabeldataset').DataTable({
+
+                    columns: [{
+                            data: 'no',
+                        },
+                        {
+                            data: 'nama',
+                        },
+                        {
+                            data: 'fm1',
+                        },
+                        {
+                            data: 'support1',
+                        }
+                    ],
+                    data: data,
+                    processing: true,
+                    deferRender: true,
+                    language: {
+                        paginate: {
+                            previous: '‹',
+                            next: '›'
+                        },
+                        aria: {
+                            paginate: {
+                                previous: 'Previous',
+                                next: 'Next'
+                            }
+                        }
+                    },
+                    pagingType: 'simple_numbers',
+                    responsive: true,
+
+                    dom: 't<"rowt justify-content-between"ip>',
+                });
+
+            });
+            document.getElementById('dataset').innerHTML = tabel;
+            document.getElementById('dataset').style.display = "block";
+            document.getElementById('tabelms1').style.display = "none";
+            document.getElementById('tabelms2').style.display = "none";
+            document.getElementById('tabelpola2item').style.display = "none";
+            document.getElementById('tabelmc').style.display = "none";
+            document.getElementById('tabelasosiasi').style.display = "none";
+
+            document.getElementById('ms1').value = 0;
+            document.getElementById('ms2').value = 0;
+            document.getElementById('mc1').value = 0;
         }
     </script>
 @endsection
