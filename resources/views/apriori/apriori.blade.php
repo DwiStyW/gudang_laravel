@@ -76,14 +76,10 @@
     <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
 
     <script>
-        var datatr = @json($gdform); //data noform
-        var datatransaksi = @json($transaksi); //data
-        var datamst = @json($master);
-        // console.log(datamst)
-
-        var arrns1 = [];
-
-        // console.log(datatransaksi[0].kode)
+        var datatr = @json($gdform); //data kode berdasarkan noform
+        var datatransaksi = @json($transaksi); //data transaksi noform dan kode
+        var datamst = @json($master); //data master barang
+        var arrns1 = []; //array untuk menampung pola 1 itemset
 
         for (let i = 0; i < datamst.length; i++) {
             findkode = datatransaksi.filter(a => a.kode == datamst[i].kode);
@@ -751,13 +747,14 @@
         }
 
         function apriori() {
-            var datanoform = [];
-            var arr2k = [];
-            var arrnf = [];
-            var arrms1 = [];
-            var arrns2 = [];
-            var arrms2 = [];
-            var result = [];
+            var datanoform = []; //untuk menampung noform dan kode yang sudah digruopby
+            var arr2k = []; //untuk menampung pola 2 kode
+            var arrnf = []; //untuk menampung noform
+            var arrms1 = []; //untuk menampung hasil eliminasi support 1
+            var arrms2 = []; //untuk menampung hasil eliminasi support 2
+            var result = []; //untuk menampung hasil eliminasi confidence
+
+
             var ms1 = document.getElementById('ms1').value;
             var elarrns1 = arrns1.filter(b => b.support1 >= ms1);
 
@@ -773,7 +770,6 @@
                         nama2: b[d].nama
                     })
                 }
-                // console.log(b)
             }
 
             for (let f = 0; f < datatr.length; f++) {
@@ -786,7 +782,6 @@
                         noform: datatr[f][g].noform,
                         kode: kode.join(',')
                     })
-                    // console.log(kode.join(','))
                 }
 
             }
@@ -797,7 +792,6 @@
                     objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
                     return objectsByKeyValue;
                 }, {});
-            // const arr = filterabsen;
             const gnoform = groupBy(['noform']);
 
             for (let [noform, value] of Object.entries(gnoform(arrnf))) {
@@ -832,7 +826,6 @@
                     nc: nc,
                 })
             }
-            console.log(arrms1);
 
 
             var ms2 = document.getElementById('ms2').value;
