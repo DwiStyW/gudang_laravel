@@ -26,11 +26,11 @@ class DashboardController extends Controller
                 'y'=>count($transaksikeluar)
             ];
 
-            $transaksimasuk=DB::select("SELECT noform,kode,count(*) From riwayat where kode='$kode' and noform!='saldo_awal' and masuk!=0 group by noform,kode");
-            $datatrmasuk[]=[
-                'kode'=>$kode,
-                'totaltransmasuk'=>count($transaksimasuk)
-            ];
+            // $transaksimasuk=DB::select("SELECT noform,kode,count(*) From riwayat where kode='$kode' and noform!='saldo_awal' and masuk!=0 group by noform,kode");
+            // $datatrmasuk[]=[
+            //     'kode'=>$kode,
+            //     'totaltransmasuk'=>count($transaksimasuk)
+            // ];
         }
         // dd($data);
         return view('dashboard.dashboard',compact('masterjenis','mastergolongan','masterbarang','datatrkeluar','datatrmasuk'));
