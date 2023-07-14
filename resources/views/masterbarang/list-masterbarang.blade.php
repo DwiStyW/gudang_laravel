@@ -67,9 +67,9 @@
                                     <td>{{ $m->expdate }}</td>
                                     <td>{{ $m->saldo }}</td>
                                     <td>
-                                        <a href="master-barang/show/{{ $m->id }}" class="px-3 text-warning">
+                                        {{-- <a href="master-barang/show/{{ $m->id }}" class="px-3 text-warning">
                                             <i class="uil uil-eye font-size-18"></i>
-                                        </a>
+                                        </a> --}}
 
                                         <a href="master-barang/edit/{{ $m->id }}" class="px-3 text-primary">
                                             <i class="uil uil-pen font-size-18"></i>

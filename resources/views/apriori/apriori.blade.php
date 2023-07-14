@@ -20,7 +20,9 @@
     {{-- <form> --}}
     <div class="card">
         <div class="card-body">
-            <label for="exampleFormControlTextarea1">minimum support 1 itemset</label>
+            <label for="exampleFormControlTextarea1">minimum support 1 itemset <i
+                    class="ms-2 uil uil-info-circle font-size-16"
+                    title="Support menunjukkan popularitas rata-rata produk atau item dalam database."></i></label>
             <div class="row">
                 <div class="col-11">
                     <input type="number" class="form-control" id="ms1" placeholder="0">
@@ -31,7 +33,9 @@
             </div>
         </div>
         <div class="card-body">
-            <label for="exampleFormControlTextarea1">minimum support 2 itemset</label>
+            <label for="exampleFormControlTextarea1">minimum support 2 itemset <i
+                    class="ms-2 uil uil-info-circle font-size-16"
+                    title="Support menunjukkan popularitas rata-rata produk atau item dalam database."></i></label>
             <div class="row">
                 <div class="col-11">
                     <input type="number" class="form-control" id="ms2" placeholder="0">
@@ -42,7 +46,8 @@
             </div>
         </div>
         <div class="card-body">
-            <label for="exampleFormControlTextarea1">minimum confidence</label>
+            <label for="exampleFormControlTextarea1">minimum confidence <i class="ms-2 uil uil-info-circle font-size-16"
+                    title="Confidence mengacu pada kemungkinan 2 itemset terdapat pada transaksi yang sama."></i></label>
             <div class="row">
                 <div class="col-11">
                     <input type="number" class="form-control" id="mc1" placeholder="0">
@@ -146,6 +151,17 @@
                 },
                 pagingType: 'simple_numbers',
                 responsive: true,
+                buttons: [{
+                        extend: 'excelHtml5',
+                        className: 'btn btn-sm p-2 rounded',
+                        title: 'Data export Master Barang'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-sm p-2 ms-1 rounded',
+                        title: 'Data export Master Barang'
+                    },
+                ],
 
                 dom: 't<"rowt justify-content-between"ip>',
             });
@@ -234,6 +250,17 @@
                     },
                     pagingType: 'simple_numbers',
                     responsive: true,
+                    buttons: [{
+                            extend: 'excelHtml5',
+                            className: 'btn btn-sm p-2 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            className: 'btn btn-sm p-2 ms-1 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                    ],
 
                     dom: 't<"rowt justify-content-between"ip>',
                 });
@@ -381,6 +408,17 @@
                     },
                     pagingType: 'simple_numbers',
                     responsive: true,
+                    buttons: [{
+                            extend: 'excelHtml5',
+                            className: 'btn btn-sm p-2 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            className: 'btn btn-sm p-2 ms-1 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                    ],
 
                     dom: 't<"rowt justify-content-between"ip>',
                 });
@@ -542,6 +580,17 @@
                     },
                     pagingType: 'simple_numbers',
                     responsive: true,
+                    buttons: [{
+                            extend: 'excelHtml5',
+                            className: 'btn btn-sm p-2 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            className: 'btn btn-sm p-2 ms-1 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                    ],
 
                     dom: 't<"rowt justify-content-between"ip>',
                 });
@@ -733,6 +782,17 @@
                     },
                     pagingType: 'simple_numbers',
                     responsive: true,
+                    buttons: [{
+                            extend: 'excelHtml5',
+                            className: 'btn btn-sm p-2 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            className: 'btn btn-sm p-2 ms-1 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                    ],
 
                     dom: 't<"rowt justify-content-between"ip>',
                 });
@@ -933,6 +993,17 @@
                     },
                     pagingType: 'simple_numbers',
                     responsive: true,
+                    buttons: [{
+                            extend: 'excelHtml5',
+                            className: 'btn btn-sm p-2 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            className: 'btn btn-sm p-2 ms-1 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                    ],
                     columnDefs: [{
                             "responsivePriority": 10001,
                             "targets": 6
@@ -1015,6 +1086,17 @@
                     },
                     pagingType: 'simple_numbers',
                     responsive: true,
+                    buttons: [{
+                            extend: 'excelHtml5',
+                            className: 'btn btn-sm p-2 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            className: 'btn btn-sm p-2 ms-1 rounded',
+                            title: 'Data export Master Barang'
+                        },
+                    ],
 
                     dom: 't<"rowt justify-content-between"ip>',
                 });

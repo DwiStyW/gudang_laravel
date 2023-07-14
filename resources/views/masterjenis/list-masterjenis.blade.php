@@ -45,15 +45,16 @@
                                     <td>{{ $m->kdjenis }}</td>
                                     <td>{{ $m->namajenis }}</td>
                                     <td>
-                                        <a href="master-jenis/show/{{ $m->id }}" class="px-3 text-warning">
+                                        {{-- <a href="master-jenis/show/{{ $m->id }}" class="px-3 text-warning">
                                             <i class="uil uil-eye font-size-18"></i>
-                                        </a>
+                                        </a> --}}
 
                                         <a href="master-jenis/edit/{{ $m->id }}" class="px-3 text-primary">
                                             <i class="uil uil-pen font-size-18"></i>
                                         </a>
 
-                                        <a href="master-jenis/delete/{{ $m->id }}" class="px-3 text-danger">
+                                        <a onclick="hapus({{ $m->id }})" data-bs-toggle="modal"
+                                            data-bs-target="#hapusmodal" class="px-3 text-danger">
                                             <i class="uil uil-trash-alt font-size-18"></i>
                                         </a>
                                     </td>
@@ -65,6 +66,27 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
+    <div class="modal fade" id="hapusmodal" tabindex="-1" aria-labelledby="hapusmodal" aria-hidden="true">
+        <div class="modal-dialog" style="width:350px;top:200px">
+            <div class="modal-content">
+                <div class="alert alert-border alert-border-warning alert-dismissible fade show mt-4 px-4 mb-0 text-center"
+                    role="alert">
+                    <i class="uil uil-exclamation-triangle d-block display-4 mt-2 mb-3 text-warning"></i>
+                    <h5 class="text-warning">Apa kamu yakin?</h5>
+                    <p>Anda tidak akan dapat mengembalikan ini!</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                    <div class="d-flex justify-content-evenly">
+                        <div id="buttonhapus"></div>
+                        <div>
+                            <button type="button" class="btn btn-md btn-danger" data-bs-dismiss="modal"> Batal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
@@ -109,5 +131,11 @@
                 dom: '<"d-flex justify-content-between"<"mt-3" B><"me-2 mb-1"f>>t<"d-flex justify-content-between"<"mt-2" l><ip>>',
             });
         });
+
+        function hapus(id) {
+            var id = id;
+            var str = '<a href="master-jenis/delete/' + id + '" class="btn btn-md btn-success">Ya, hapus!</a>';
+            document.getElementById('buttonhapus').innerHTML = str;
+        }
     </script>
 @endsection

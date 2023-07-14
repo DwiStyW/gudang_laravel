@@ -47,31 +47,18 @@
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-end">
-                    {{-- <!-- item-->
-                    <a class="dropdown-item" href="#"><i
-                            class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span
-                            class="align-middle">@lang('translation.View_Profile')</span></a>
-                    <a class="dropdown-item" href="#"><i
-                            class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span
-                            class="align-middle">@lang('translation.My_Wallet')</span></a>
-                    <a class="dropdown-item d-block" href="#"><i
-                            class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span
-                            class="align-middle">@lang('translation.Settings')</span> <span
-                            class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a>
-                    <a class="dropdown-item" href="#"><i
-                            class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span
-                            class="align-middle">@lang('translation.Lock_screen')</span></a> --}}
                     <a class="dropdown-item" href="/logout"><i
                             class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span
                             class="align-middle">@lang('translation.Sign_out')</span></a>
                 </div>
-
-                <div class="dropdown d-inline-block">
-                    <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
-                        <i class="uil-cog"></i>
-                    </button>
-                </div>
-
             </div>
+
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
+                    <i class="uil-cog"></i>
+                </button>
+            </div>
+
         </div>
+    </div>
 </header>

@@ -64,14 +64,14 @@
                         <li><a href={{ url('barang-keluar') }}>@lang('Keluar')</a></li>
                     </ul>
                 </li>
-                @if (Auth::user()->role == 'admin')
-                    <li>
-                        <a href="{{ url('apriori') }}">
-                            <i class="uil-calculator-alt"></i>
-                            <span>@lang('Apriori')</span>
-                        </a>
-                    </li>
-                @endif
+                {{-- @if (Auth::user()->role == 'admin') --}}
+                <li>
+                    <a href="{{ url('apriori') }}">
+                        <i class="uil-calculator-alt"></i>
+                        <span>@lang('Apriori')</span>
+                    </a>
+                </li>
+                {{-- @endif --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-vertical-distribution-top"></i>
@@ -80,7 +80,7 @@
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href={{ url('riwayatkeluarmasuk') }}>@lang('Riwayat keluar masuk')</a></li>
                         <li><a href={{ url('laporanpergolongan') }}>@lang('Laporan perGolongan')</a></li>
-                        <li><a href={{ url('laporanall') }}>@lang('Laporan All')</a></li>
+                        {{-- <li><a href={{ url('laporanall') }}>@lang('Laporan All')</a></li> --}}
                         <li><a href={{ url('laporansaldoakhir') }}>@lang('Laporan Saldo Akhir')</a></li>
                     </ul>
                 </li>

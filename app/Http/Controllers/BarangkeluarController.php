@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MasterBarang;
-use App\Models\Riwayattrack;
+use App\Models\Riwayat;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +18,7 @@ class BarangkeluarController extends Controller
     public function index()
     {
         //
-        $riwayatkeluar=DB::select('SELECT riwayattrack.*,nama,max1,max2,sat1,sat2,sat3 from riwayattrack left join master on riwayattrack.kode=master.kode where masuk=0 order by id DESC');
+        $riwayatkeluar=DB::select('SELECT riwayat.*,nama,max1,max2,sat1,sat2,sat3 from riwayat join master on riwayat.kode=master.kode where masuk=0 order by riwayat.id DESC');
         return view('barangkeluar.list-barangkeluar',compact('riwayatkeluar'));
     }
 
@@ -46,7 +46,6 @@ class BarangkeluarController extends Controller
         $index=$i+1;
         $kode='kode'.$index;
         $nobatch='nobatch'.$index;
-        $nopallet='nopallet'.$index;
         $sat1='sat1kode'.$index;
         $sat2='sat2kode'.$index;
         $sat3='sat3kode'.$index;
@@ -69,11 +68,9 @@ class BarangkeluarController extends Controller
                 'noform'=>$request->noform,
                 'kode'=>$request->$kode,
                 'nobatch'=>$request->$nobatch,
-                'nopallet'=>$request->$nopallet,
                 'masuk'=>0,
                 'keluar'=>$jumlah,
                 'cat'=>$request->$catatan,
-                'statpallet'=>'NONE',
                 'ket'=>'input',
                 'saldo'=>'0',
                 'tanggal'=>$request->tgl,
@@ -81,7 +78,7 @@ class BarangkeluarController extends Controller
         }
         // dd($data);
          try{
-            Riwayattrack::insert($data);
+            Riwayat::insert($data);
             return redirect("/barang-keluar")->with('success','Data berhasil ditambahkan!');
         }catch(Exception $e){
             dd($e);
@@ -108,9 +105,9 @@ class BarangkeluarController extends Controller
      */
     public function edit($id)
     {
-        $riwayatkeluar=Riwayattrack::leftjoin('master','master.kode','=','riwayattrack.kode')
-        ->where('riwayattrack.id',$id)
-        ->select('riwayattrack.*','max1','max2','sat1','sat2','sat3')
+        $riwayatkeluar=Riwayat::join('master','master.kode','=','riwayat.kode')
+        ->where('riwayat.id',$id)
+        ->select('riwayat.*','max1','max2','sat1','sat2','sat3')
         ->get();
         $barang=MasterBarang::get();
         // dd($riwayatmasuk);
@@ -143,11 +140,9 @@ class BarangkeluarController extends Controller
                 'noform'=>$request->noform,
                 'kode'=>$request->kode,
                 'nobatch'=>$request->nobatch,
-                'nopallet'=>$request->nopallet,
                 'masuk'=>0,
                 'keluar'=>$jumlah,
                 'cat'=>$request->catatan,
-                'statpallet'=>'NONE',
                 'ket'=>'input',
                 'saldo'=>'0',
                 'tanggal'=>$request->tgl,
@@ -155,7 +150,7 @@ class BarangkeluarController extends Controller
             ];
         // dd($id);
         try{
-            Riwayattrack::where('id',$id)->update($data);
+            Riwayat::where('id',$id)->update($data);
             return redirect("/barang-keluar")->with('success','Data berhasil diedit!');
         }catch(Exception $e){
             dd($e);
@@ -172,5 +167,11 @@ class BarangkeluarController extends Controller
     public function destroy($id)
     {
         //
+        try{
+            Riwayat::where('id',$id)->delete();
+            return redirect("/barang-keluar")->with('success','Data berhasil dihapus!');
+        }catch(Exception $e){
+            return redirect("/barang-keluar")->with('failed','Data gagal dihapus!');
+        }
     }
 }

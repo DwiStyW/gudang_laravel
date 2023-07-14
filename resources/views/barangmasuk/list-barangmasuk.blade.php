@@ -36,8 +36,6 @@
                                 <th data-priority="1">Kode Barang</th>
                                 <th data-priority="2">Nama Barang</th>
                                 <th data-priority="1">No Batch</th>
-                                <th data-priority="1">No Pallet</th>
-                                <th data-priority="3">Status</th>
                                 <th data-priority="1">Satuan 1</th>
                                 <th data-priority="1">Satuan 2</th>
                                 <th data-priority="1">Satuan 3</th>
@@ -59,8 +57,6 @@
                                     <td>{{ $rm->kode }}</td>
                                     <td>{{ $rm->nama }}</td>
                                     <td>{{ $rm->nobatch }}</td>
-                                    <td>{{ $rm->nopallet }}</td>
-                                    <td>{{ $rm->statpallet }}</td>
                                     @php
                                         $sats1 = floor($rm->masuk / ($rm->max1 * $rm->max2));
                                         $sisa = $rm->masuk - $sats1 * $rm->max1 * $rm->max2;
@@ -74,9 +70,9 @@
                                     {{-- <td>{{ $rm->adm }}</td> --}}
                                     <td>{{ $rm->cat }}</td>
                                     <td>
-                                        <a href="barang-masuk/show/{{ $rm->id }}" class="px-3 text-warning">
+                                        {{-- <a href="barang-masuk/show/{{ $rm->id }}" class="px-3 text-warning">
                                             <i class="uil uil-eye font-size-18"></i>
-                                        </a>
+                                        </a> --}}
 
                                         <a href="barang-masuk/edit/{{ $rm->id }}" class="px-3 text-primary">
                                             <i class="uil uil-pen font-size-18"></i>

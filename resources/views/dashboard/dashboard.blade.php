@@ -68,19 +68,38 @@
             </div>
 
         </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div id="column-trans"></div>
+                </div>
+            </div>
+
+        </div>
         <!-- end col -->
     </div> <!-- end row -->
 @endsection
 @section('script')
     <script>
+        let datak = @json($datatrkeluar);
+        datak.sort((a, b) => {
+            return b.y - a.y;
+        })
+        var datakeluar = datak.slice(0, 10);
+        // var datam = @json($datatrmasuk);
+        // var datamasuk = []
+        // for (let i = 0; i < datakeluar.length; i++) {
+        //     filtermasuk = datam.filter(a => a.kode == datakeluar[i].kode)
+        //     datamasuk.push({
+        //         'kode': filtermasuk[0].kode,
+        //         'totaltransmasuk': filtermasuk[0].totaltransmasuk
+        //     })
+        // }
+
         var seriesOptions = [],
             seriesCounter = 0,
             names = ['Transaksi masuk', 'Transaksi keluar'];
 
-        /**
-         * Create the chart when all data is loaded
-         * @return {undefined}
-         */
         function createChart() {
 
             Highcharts.stockChart('transaksi', {
@@ -114,14 +133,10 @@
         function success(data) {
             var name = 'Transaksi ' + this.url.match(/(masuk|keluar)/)[0];
             var i = names.indexOf(name);
-            // console.log(name);
             seriesOptions[i] = {
                 name: name,
                 data: data
             };
-
-            // As we're loading the data asynchronously, we don't know what order it
-            // will arrive. So we keep a counter and create the chart when all the data is loaded.
             seriesCounter += 1;
 
             if (seriesCounter === names.length) {
@@ -137,5 +152,51 @@
             'http://127.0.0.1:8080/api/keluar',
             success
         );
+
+        Highcharts.chart('column-trans', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                align: 'left',
+                text: 'Grafik total transaksi keluar perbarang'
+            },
+            accessibility: {
+                announceNewData: {
+                    enabled: true
+                }
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: 'Total Transaksi'
+                }
+
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y}'
+                    }
+                }
+            },
+
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> of total<br/>'
+            },
+            series: [{
+                name: 'Transaksi',
+                colorByPoint: true,
+                data: datakeluar
+            }]
+        });
     </script>
 @endsection

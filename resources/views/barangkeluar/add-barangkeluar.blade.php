@@ -69,18 +69,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-sm-12">
+                                <div class="col-lg-12 col-sm-12">
                                     <div class="p-1">
                                         <label for="exampleFormControlTextarea1">No Batch</label>
                                         <input type="text" class="form-control" name="nobatch1" placeholder="No Batch">
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-sm-12">
-                                    <div class="p-1">
-                                        <label for="exampleFormControlTextarea1">No Pallet</label>
-                                        <input type="text" class="form-control" name="nopallet1" placeholder="No Pallet">
-                                    </div>
-                                </div>
+
                                 <div class="col-lg-12 col-sm-12">
                                     <div class="p-1">
                                         <label for="exampleFormControlTextarea1">Satuan 1</label>
@@ -217,18 +212,11 @@
             str += '            </select>';
             str += '        </div>';
             str += '    </div>';
-            str += '    <div class="col-lg-6 col-sm-12">';
+            str += '    <div class="col-lg-12 col-sm-12">';
             str += '        <div class="p-1">';
             str += '            <label for="exampleFormControlTextarea1">No Batch</label>';
             str += '            <input type="text" class="form-control" name="nobatch' + index +
                 '" placeholder="No Batch">';
-            str += '        </div>';
-            str += '    </div>';
-            str += '    <div class="col-lg-6 col-sm-12">';
-            str += '        <div class="p-1">';
-            str += '            <label for="exampleFormControlTextarea1">No Pallet</label>';
-            str += '            <input type="text" class="form-control" name="nopallet' + index +
-                '" placeholder="No Pallet">';
             str += '        </div>';
             str += '    </div>';
             str += '    <div class="col-lg-12 col-sm-12">';

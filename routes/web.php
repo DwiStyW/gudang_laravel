@@ -47,61 +47,61 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 //master-barang
-Route::get('master-barang', [masterbarangController::class, 'index']);
-Route::get('master-barang/add', [masterbarangController::class, 'create']);
-Route::post('master-barang/store', [masterbarangController::class, 'store']);
-Route::get('master-barang/show/{id}', [masterbarangController::class, 'show']);
-Route::get('master-barang/edit/{id}', [masterbarangController::class, 'edit']);
-Route::post('master-barang/update/{id}', [masterbarangController::class, 'update']);
-Route::get('master-barang/delete/{id}', [masterbarangController::class, 'destroy']);
+Route::get('master-barang', [masterbarangController::class, 'index'])->middleware('auth');
+Route::get('master-barang/add', [masterbarangController::class, 'create'])->middleware('auth');
+Route::post('master-barang/store', [masterbarangController::class, 'store'])->middleware('auth');
+Route::get('master-barang/show/{id}', [masterbarangController::class, 'show'])->middleware('auth');
+Route::get('master-barang/edit/{id}', [masterbarangController::class, 'edit'])->middleware('auth');
+Route::post('master-barang/update/{id}', [masterbarangController::class, 'update'])->middleware('auth');
+Route::get('master-barang/delete/{id}', [masterbarangController::class, 'destroy'])->middleware('auth');
 
 //master-jenis
-Route::get('master-jenis', [MasterJenisController::class, 'index']);
-Route::get('master-jenis/add', [MasterJenisController::class, 'create']);
-Route::post('master-jenis/store', [MasterJenisController::class, 'store']);
-Route::get('master-jenis/show/{id}', [MasterJenisController::class, 'show']);
-Route::get('master-jenis/edit/{id}', [MasterJenisController::class, 'edit']);
-Route::post('master-jenis/update/{id}', [MasterJenisController::class, 'update']);
-Route::get('master-jenis/delete/{id}', [MasterJenisController::class, 'destroy']);
+Route::get('master-jenis', [MasterJenisController::class, 'index'])->middleware('auth');
+Route::get('master-jenis/add', [MasterJenisController::class, 'create'])->middleware('auth');
+Route::post('master-jenis/store', [MasterJenisController::class, 'store'])->middleware('auth');
+Route::get('master-jenis/show/{id}', [MasterJenisController::class, 'show'])->middleware('auth');
+Route::get('master-jenis/edit/{id}', [MasterJenisController::class, 'edit'])->middleware('auth');
+Route::post('master-jenis/update/{id}', [MasterJenisController::class, 'update'])->middleware('auth');
+Route::get('master-jenis/delete/{id}', [MasterJenisController::class, 'destroy'])->middleware('auth');
 
 //master-golongan
-Route::get('master-golongan', [MasterGolonganController::class, 'index']);
-Route::get('master-golongan/add', [MasterGolonganController::class, 'create']);
-Route::post('master-golongan/store', [MasterGolonganController::class, 'store']);
-Route::get('master-golongan/show/{id}', [MasterGolonganController::class, 'show']);
-Route::get('master-golongan/edit/{id}', [MasterGolonganController::class, 'edit']);
-Route::post('master-golongan/update/{id}', [MasterGolonganController::class, 'update']);
-Route::get('master-golongan/delete/{id}', [MasterGolonganController::class, 'destroy']);
+Route::get('master-golongan', [MasterGolonganController::class, 'index'])->middleware('auth');
+Route::get('master-golongan/add', [MasterGolonganController::class, 'create'])->middleware('auth');
+Route::post('master-golongan/store', [MasterGolonganController::class, 'store'])->middleware('auth');
+Route::get('master-golongan/show/{id}', [MasterGolonganController::class, 'show'])->middleware('auth');
+Route::get('master-golongan/edit/{id}', [MasterGolonganController::class, 'edit'])->middleware('auth');
+Route::post('master-golongan/update/{id}', [MasterGolonganController::class, 'update'])->middleware('auth');
+Route::get('master-golongan/delete/{id}', [MasterGolonganController::class, 'destroy'])->middleware('auth');
 
 //barang-masuk
-Route::get('barang-masuk', [BarangmasukController::class, 'index']);
-Route::get('barang-masuk/add', [BarangmasukController::class, 'create']);
-Route::post('barang-masuk/store', [BarangmasukController::class, 'store']);
-Route::get('barang-masuk/show/{id}', [BarangmasukController::class, 'show']);
-Route::get('barang-masuk/edit/{id}', [BarangmasukController::class, 'edit']);
-Route::post('barang-masuk/update/{id}', [BarangmasukController::class, 'update']);
-Route::get('barang-masuk/delete/{id}', [BarangmasukController::class, 'destroy']);
+Route::get('barang-masuk', [BarangmasukController::class, 'index'])->middleware('auth');
+Route::get('barang-masuk/add', [BarangmasukController::class, 'create'])->middleware('auth');
+Route::post('barang-masuk/store', [BarangmasukController::class, 'store'])->middleware('auth');
+Route::get('barang-masuk/show/{id}', [BarangmasukController::class, 'show'])->middleware('auth');
+Route::get('barang-masuk/edit/{id}', [BarangmasukController::class, 'edit'])->middleware('auth');
+Route::post('barang-masuk/update/{id}', [BarangmasukController::class, 'update'])->middleware('auth');
+Route::get('barang-masuk/delete/{id}', [BarangmasukController::class, 'destroy'])->middleware('auth');
 
 //barang-keluar
-Route::get('barang-keluar', [BarangkeluarController::class, 'index']);
-Route::get('barang-keluar/add', [BarangkeluarController::class, 'create']);
-Route::post('barang-keluar/store', [BarangkeluarController::class, 'store']);
-Route::get('barang-keluar/show/{id}', [BarangkeluarController::class, 'show']);
-Route::get('barang-keluar/edit/{id}', [BarangkeluarController::class, 'edit']);
-Route::post('barang-keluar/update/{id}', [BarangkeluarController::class, 'update']);
-Route::get('barang-keluar/delete/{id}', [BarangkeluarController::class, 'destroy']);
+Route::get('barang-keluar', [BarangkeluarController::class, 'index'])->middleware('auth');
+Route::get('barang-keluar/add', [BarangkeluarController::class, 'create'])->middleware('auth');
+Route::post('barang-keluar/store', [BarangkeluarController::class, 'store'])->middleware('auth');
+Route::get('barang-keluar/show/{id}', [BarangkeluarController::class, 'show'])->middleware('auth');
+Route::get('barang-keluar/edit/{id}', [BarangkeluarController::class, 'edit'])->middleware('auth');
+Route::post('barang-keluar/update/{id}', [BarangkeluarController::class, 'update'])->middleware('auth');
+Route::get('barang-keluar/delete/{id}', [BarangkeluarController::class, 'destroy'])->middleware('auth');
 
 // apriori
-Route::get('apriori', [AprioriController::class, 'index']);
+Route::get('apriori', [AprioriController::class, 'index'])->middleware('auth');
 
 // laporan
-Route::get('riwayatkeluarmasuk',[LaporanController::class,'riwayatkeluarmasuk']);
-Route::get('laporanpergolongan',[LaporanController::class,'laporanpergolongan']);
-Route::get('laporanall',[LaporanController::class,'laporanall']);
-Route::get('laporansaldoakhir',[LaporanController::class,'laporansaldoakhir']);
+Route::get('riwayatkeluarmasuk',[LaporanController::class,'riwayatkeluarmasuk'])->middleware('auth');
+Route::get('laporanpergolongan',[LaporanController::class,'laporanpergolongan'])->middleware('auth');
+Route::get('laporanall',[LaporanController::class,'laporanall'])->middleware('auth');
+Route::get('laporansaldoakhir',[LaporanController::class,'laporansaldoakhir'])->middleware('auth');
 
 // carilaporan
-Route::post('caririwayatkeluarmasuk',[LaporanController::class,'caririwayatkeluarmasuk']);
-Route::post('caripergol',[LaporanController::class,'caripergol']);
-Route::post('carisaldoakhir',[LaporanController::class,'carisaldoakhir']);
-Route::post('cariall',[LaporanController::class,'cariall']);
+Route::post('caririwayatkeluarmasuk',[LaporanController::class,'caririwayatkeluarmasuk'])->middleware('auth');
+Route::post('caripergol',[LaporanController::class,'caripergol'])->middleware('auth');
+Route::post('carisaldoakhir',[LaporanController::class,'carisaldoakhir'])->middleware('auth');
+Route::post('cariall',[LaporanController::class,'cariall'])->middleware('auth');

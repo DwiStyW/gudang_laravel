@@ -60,21 +60,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-sm-12">
+                <div class="col-lg-12 col-sm-12">
                     <div class="card">
                         <div class="card-body">
                             <label for="exampleFormControlTextarea1">No Batch</label>
                             <input type="text" class="form-control" name="nobatch" placeholder="No Batch"
                                 value="{{ $find->nobatch }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <label for="exampleFormControlTextarea1">No Pallet</label>
-                            <input type="text" class="form-control" name="nopallet" placeholder="No Pallet"
-                                value="{{ $find->nopallet }}">
                         </div>
                     </div>
                 </div>
